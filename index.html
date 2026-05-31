@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Habit Ignite</title>
+
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+background:#0b1220;
+color:white;
+}
+
+#login{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0f172a;
+}
+
+.box{
+background:rgba(255,255,255,0.06);
+padding:18px;
+border-radius:14px;
+width:240px;
+text-align:center;
+}
+
+input,button{
+width:100%;
+padding:10px;
+margin-top:8px;
+border:none;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+button{
+background:#22c55e;
+font-weight:bold;
+cursor:pointer;
+}
+
+#app{display:none;}
+
+header{
+padding:15px;
+text-align:center;
+font-weight:bold;
+background:linear-gradient(135deg,#22c55e,#0ea5e9);
+}
+
+nav{
+display:flex;
+gap:6px;
+padding:10px;
+background:#0f172a;
+}
+
+nav button{
+flex:1;
+padding:10px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+color:#aaa;
+font-weight:bold;
+}
+
+nav button.active{
+background:#22c55e;
+color:black;
+}
+
+.section{display:none;padding:15px;}
+.section.active{display:block;}
+
+.card{
+background:rgba(255,255,255,0.06);
+padding:10px;
+margin:6px 0;
+border-radius:10px;
+
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.time{
+color:#22c55e;
+font-weight:bold;
+min-width:55px;
+}
+
+.tap{
+margin-left:auto;
+cursor:pointer;
+font-size:18px;
+}
+
+.battery{
+width:100%;
+height:18px;
+border-radius:6px;
+border:2px solid #aaa;
+overflow:hidden;
+margin-top:10px;
+}
+
+.battery-fill{
+height:100%;
+width:0%;
+background:#22c55e;
+}
+
+.battery-text{
+text-align:center;
+font-size:12px;
+color:#aaa;
+margin-top:5px;
+}
+
+.recap{
+background:rgba(255,255,255,0.06);
+padding:12px;
+border-radius:12px;
+}
+
+.month-title{
+margin-top:15px;
+text-align:center;
+font-weight:bold;
+color:#22c55e;
+}
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:5px;
+margin-top:8px;
+}
+
+.day{
+aspect-ratio:1/1;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,0.05);
+border-radius:6px;
+font-size:12px;
+}
+
+.today{
+background:#22c55e;
+color:black;
+font-weight:bold;
+}
+
+#musicBtn{
+position:fixed;
+bottom:80px;
+right:15px;
+width:55px;
+height:55px;
+border-radius:50%;
+border:none;
+background:#22c55e;
+color:black;
+font-size:22px;
+display:block;
+cursor:pointer;
+}
+
+.weekdays{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+text-align:center;
+font-size:12px;
+font-weight:bold;
+color:#aaa;
+margin:5px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+<div class="box">
+<h2>Habit Ignite 🌿</h2>
+<input id="pw" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+<header>Habit Ignite 🌿</header>
+
+<nav>
+<button onclick="tab('cal',this)" class="active">KALENDER</button>
+<button onclick="tab('check',this)">CHECKLIST</button>
+<button onclick="tab('history',this)">HISTORY</button>
+<button onclick="tab('data',this)">DATA</button>
+</nav>
+
+<!-- KALENDER -->
+<div id="cal" class="section active">
+<div id="calendar"></div>
+</div>
+
+<!-- CHECKLIST -->
+<div id="check" class="section">
+
+<div class="card">
+<span class="time">07.15</span> Olahraga Pagi <span class="tap">☐</span>
+</div>
+
+<div class="card">
+<span class="time">08.10</span> Minum Asupan <span class="tap">☐</span>
+</div>
+
+<div class="card">
+<span class="time">13.00</span> Makan Siang <span class="tap">☐</span>
+</div>
+
+<div class="card">
+<span class="time">15.15</span> Olahraga Sore <span class="tap">☐</span>
+</div>
+
+<div class="card">
+<span class="time">--</span> Tidak PMO <span class="tap">☐</span>
+</div>
+
+<div class="battery">
+<div class="battery-fill" id="batteryFill"></div>
+</div>
+<div class="battery-text" id="percentText">0%</div>
+
+</div>
+
+<!-- HISTORY -->
+<div id="history" class="section">
+<div class="recap">
+<h2>HISTORY</h2>
+<div id="historyBox"></div>
+</div>
+</div>
+
+<!-- DATA -->
+<div id="data" class="section">
+<div class="recap">
+<h2>DATA</h2>
+
+<div id="totalDays"></div>
+<div id="avgPercent"></div>
+
+<br>
+
+<div id="c1"></div>
+<div id="c2"></div>
+<div id="c3"></div>
+<div id="c4"></div>
+<div id="c5"></div>
+
+</div>
+</div>
+
+<button id="musicBtn" onclick="cycleMusic()">🎵</button>
+<audio id="bgMusic"></audio>
+
+</div>
+
+<script>
+
+/* 🔥 FULL RESET TOTAL STORAGE */
+localStorage.removeItem("habit");
+
+/* DATA BARU KOSONG */
+let data = {};
+
+/* KEY */
+function getKey(d){
+return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+}
+
+/* LOGIN */
+function login(){
+if(document.getElementById("pw").value==="1269"){
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+calendar();
+init();
+load();
+}
+}
+
+/* NAV */
+function tab(id,el){
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+el.classList.add("active");
+}
+
+/* INIT CHECKLIST */
+function init(){
+
+document.querySelectorAll(".tap").forEach((t,i)=>{
+
+t.onclick=()=>{
+
+if(t.classList.contains("done")) return;
+
+let card = t.parentElement;
+let text = card.firstChild.textContent.trim();
+
+// ambil jam dari text (07.15)
+let hour = text.split(" ")[0];
+
+t.classList.add("done");
+t.innerText="☑";
+
+save(i, hour);
+}
+
+});
+
+}
+
+/* SAVE */
+function save(i, hour){
+
+let key = getKey(new Date());
+
+if(!data[key]) data[key]=Array(5).fill(null);
+
+data[key][i] = {
+status:true,
+time:hour
+};
+
+localStorage.setItem("habit",JSON.stringify(data));
+
+load();
+}
+
+/* LOAD */
+function load(){
+
+let key = getKey(new Date());
+
+let today = data[key] || Array(5).fill(false);
+
+document.querySelectorAll(".tap").forEach((t,i)=>{
+if(today[i]){
+t.classList.add("done");
+t.innerText="☑";
+}else{
+t.classList.remove("done");
+t.innerText="☐";
+}
+});
+
+let done = today.filter(v=>v).length;
+let percent = Math.round((done/5)*100);
+
+document.getElementById("batteryFill").style.width = percent+"%";
+document.getElementById("percentText").innerText = percent+"%";
+
+renderHistory();
+renderData();
+}
+
+/* HISTORY CLEAN (2 HARI SAJA) */
+function renderHistory(){
+
+let box = document.getElementById("historyBox");
+let d = new Date();
+
+let key = getKey(d);
+let val = data[key] || Array(5).fill(false);
+
+let done = val.filter(v=>v).length;
+let percent = Math.round((done/5)*100);
+
+let format =
+String(d.getDate()).padStart(2,'0')+"/"+
+String(d.getMonth()+1).padStart(2,'0')+"/"+
+String(d.getFullYear()).slice(-2);
+
+box.innerHTML = `
+<div class="card">
+<div>${format}</div>
+<div>${percent}%</div>
+</div>
+`;
+}
+
+
+/* DATA CLEAN */
+function renderData(){
+
+let total=0,sum=0;
+
+let c1=0,c2=0,c3=0,c4=0,c5=0;
+
+for(let key in data){
+
+let d=data[key];
+if(!Array.isArray(d)) continue;
+
+let done=d.filter(v=>v).length;
+let percent=Math.round((done/5)*100);
+
+total++;
+sum+=percent;
+
+if(d[0]) c1++;
+if(d[1]) c2++;
+if(d[2]) c3++;
+if(d[3]) c4++;
+if(d[4]) c5++;
+}
+
+let avg = total ? Math.round(sum/total) : 0;
+
+document.getElementById("totalDays").innerHTML="Total Hari: "+total;
+document.getElementById("avgPercent").innerHTML="Rata-rata: "+avg+"%";
+
+document.getElementById("c1").innerHTML="Olahraga Pagi: "+(total?Math.round((c1/total)*100):0)+"%";
+document.getElementById("c2").innerHTML="Minum Asupan: "+(total?Math.round((c2/total)*100):0)+"%";
+document.getElementById("c3").innerHTML="Makan Siang: "+(total?Math.round((c3/total)*100):0)+"%";
+document.getElementById("c4").innerHTML="Olahraga Sore: "+(total?Math.round((c4/total)*100):0)+"%";
+document.getElementById("c5").innerHTML="Tidak PMO: "+(total?Math.round((c5/total)*100):0)+"%";
+}
+
+/* CALENDAR SIMPLE */
+function calendar(){
+
+let el=document.getElementById("calendar");
+let now=new Date();
+
+let months=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+let html="";
+
+for(let m=0;m<12;m++){
+
+let days=new Date(2026,m+1,0).getDate();
+let first=new Date(2026,m,1).getDay();
+if(first===0) first=7;
+
+html+=`<div class="month-title">📅 ${months[m]} 2026</div>`;
+
+html += `
+<div class="weekdays">
+<div>Sen</div><div>Sel</div><div>Rab</div>
+<div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div>
+</div>
+`;
+
+html+=`<div class="calendar">`;
+
+for(let i=1;i<first;i++) html+=`<div></div>`;
+
+for(let d=1;d<=days;d++){
+
+let isToday = (d===now.getDate() && m===now.getMonth());
+
+html+=`<div class="day ${isToday?'today':''}">${d}</div>`;
+}
+
+html+=`</div>`;
+}
+
+el.innerHTML=html;
+}
+
+let musicList=["music1.mp3","music2.mp3","music3.mp3","music4.mp3","music5.mp3"];
+let musicIndex=0;
+let playing=false;
+
+function cycleMusic(){
+let m=document.getElementById("bgMusic");
+let b=document.getElementById("musicBtn");
+
+if(!playing){
+m.src=musicList[musicIndex];
+m.play();
+playing=true;
+b.innerText="🎶1";
+return;
+}
+
+musicIndex++;
+
+if(musicIndex<musicList.length){
+m.src=musicList[musicIndex];
+m.play();
+b.innerText="🎶"+(musicIndex+1);
+}else{
+m.pause();
+musicIndex=0;
+playing=false;
+b.innerText="🎵";
+}
+}
+
+</script>
+
+</body>
+</html>
