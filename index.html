@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Habit Ignite</title>
+<title>Habit Positif</title>
 
 <style>
 body{
@@ -13,6 +13,7 @@ background:#0b1220;
 color:white;
 }
 
+/* LOGIN */
 #login{
 position:fixed;
 inset:0;
@@ -45,6 +46,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
+/* APP */
 #app{display:none;}
 
 header{
@@ -54,101 +56,116 @@ font-weight:bold;
 background:linear-gradient(135deg,#22c55e,#0ea5e9);
 }
 
+/* NAV */
 nav{
 display:flex;
-gap:6px;
-padding:10px;
+justify-content:space-around;
 background:#0f172a;
+padding:10px;
+border-top:1px solid rgba(255,255,255,0.08);
+gap:6px;
 }
 
 nav button{
 flex:1;
-padding:10px;
+padding:10px 0;
 border:none;
 border-radius:14px;
 background:rgba(255,255,255,0.05);
 color:#aaa;
 font-weight:bold;
+transition:0.2s;
 }
 
 nav button.active{
 background:#22c55e;
 color:black;
+box-shadow:0 0 12px rgba(34,197,94,0.35);
 }
 
+/* SECTION */
 .section{display:none;padding:15px;}
 .section.active{display:block;}
 
+/* CHECKLIST */
 .card{
 background:rgba(255,255,255,0.06);
 padding:10px;
 margin:6px 0;
 border-radius:10px;
-
 display:flex;
-align-items:center;
-gap:10px;
-}
-
-.time{
-color:#22c55e;
-font-weight:bold;
-min-width:55px;
+justify-content:space-between;
 }
 
 .tap{
-margin-left:auto;
 cursor:pointer;
 font-size:18px;
 }
 
+.tap.done{
+color:#22c55e;
+cursor:not-allowed;
+}
+
+/* BATTERY */
+.battery-wrap{margin-top:10px;}
+
 .battery{
 width:100%;
 height:18px;
-border-radius:6px;
 border:2px solid #aaa;
+border-radius:6px;
 overflow:hidden;
-margin-top:10px;
 }
 
 .battery-fill{
 height:100%;
 width:0%;
 background:#22c55e;
+transition:0.3s;
 }
 
 .battery-text{
-text-align:center;
-font-size:12px;
-color:#aaa;
 margin-top:5px;
+font-size:12px;
+text-align:center;
+color:#aaa;
 }
 
+/* RECAP */
 .recap{
 background:rgba(255,255,255,0.06);
 padding:12px;
 border-radius:12px;
+text-align:center;
 }
 
+/* CALENDAR */
 .month-title{
-margin-top:15px;
-text-align:center;
+margin-top:18px;
 font-weight:bold;
 color:#22c55e;
+}
+
+.weekdays{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+text-align:center;
+font-size:11px;
+color:#aaa;
+margin-top:5px;
 }
 
 .calendar{
 display:grid;
 grid-template-columns:repeat(7,1fr);
 gap:5px;
-margin-top:8px;
+margin-top:5px;
 }
 
 .day{
-aspect-ratio:1/1;
-display:flex;
-align-items:center;
-justify-content:center;
+padding:8px;
+text-align:center;
 background:rgba(255,255,255,0.05);
 border-radius:6px;
 font-size:12px;
@@ -160,6 +177,7 @@ color:black;
 font-weight:bold;
 }
 
+/* MUSIC BUTTON (hidden default) */
 #musicBtn{
 position:fixed;
 bottom:80px;
@@ -170,25 +188,55 @@ border-radius:50%;
 border:none;
 background:#22c55e;
 color:black;
-font-size:22px;
-display:block;
-cursor:pointer;
-}
-
-#musicBtn{
+font-size:20px;
+box-shadow:0 0 10px rgba(34,197,94,0.4);
 display:none;
 }
 
-.weekdays{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-text-align:center;
-font-size:12px;
-font-weight:bold;
-color:#aaa;
-margin:5px 0;
+.month-title{
+  font-weight:bold;
+  margin:10px 0;
 }
 
+/* JANUARI */
+.month-0 .bulan { color:#ef4444; }
+
+/* FEBRUARI */
+.month-1 .bulan { color:#f97316; }
+
+/* MARET */
+.month-2 .bulan { color:#eab308; }
+
+/* APRIL */
+.month-3 .bulan { color:#22c55e; }
+
+/* MEI */
+.month-4 .bulan { color:#FF0000; }
+
+/* JUNI */
+.month-5 .bulan { color:#FFFF00; }
+
+/* JULI */
+.month-6 .bulan { color:#ADFF2F; }
+
+/* AGUSTUS */
+.month-7 .bulan { color:#00BFFF; }
+
+/* SEPTEMBER */
+.month-8 .bulan { color:#FF00FF; }
+
+/* OKTOBER */
+.month-9 .bulan { color:#f43f5e; }
+
+/* NOVEMBER */
+.month-10 .bulan { color:	#FFA500; }
+
+/* DESEMBER */
+.month-11 .bulan { color:#00FFFF; }
+
+.month-title .tahun{
+  color:#00FF00;
+}
 </style>
 </head>
 
@@ -197,7 +245,7 @@ margin:5px 0;
 <!-- LOGIN -->
 <div id="login">
 <div class="box">
-<h2>Habit Ignite 🌿</h2>
+<h2>Habit Positif 🌿</h2>
 <input id="pw" type="password" placeholder="Password">
 <button onclick="login()">Login</button>
 </div>
@@ -206,13 +254,12 @@ margin:5px 0;
 <!-- APP -->
 <div id="app">
 
-<header>Habit Ignite 🌿</header>
+<header>Habit Positif 🌿</header>
 
 <nav>
-<button onclick="tab('cal',this)" class="active">KALENDER</button>
-<button onclick="tab('check',this)">CHECKLIST</button>
-<button onclick="tab('history',this)">HISTORY</button>
-<button onclick="tab('data',this)">DATA</button>
+<button onclick="tab('cal')" class="active">Kalender</button>
+<button onclick="tab('check')">Checklist</button>
+<button onclick="tab('rec')">Recap</button>
 </nav>
 
 <!-- KALENDER -->
@@ -223,88 +270,50 @@ margin:5px 0;
 <!-- CHECKLIST -->
 <div id="check" class="section">
 
-<div class="card">
-<span class="time">07.15</span> Olahraga Pagi <span class="tap">☐</span>
-</div>
+<div class="card">07.15 Olahraga Pagi <span class="tap">☐</span></div>
+<div class="card">08.10 Minum Asupan <span class="tap">☐</span></div>
+<div class="card">13.00 Makan Siang <span class="tap">☐</span></div>
+<div class="card">15.15 Olahraga Sore <span class="tap">☐</span></div>
+<div class="card">Tidak PMO <span class="tap">☐</span></div>
 
-<div class="card">
-<span class="time">08.10</span> Minum Asupan <span class="tap">☐</span>
-</div>
-
-<div class="card">
-<span class="time">13.00</span> Makan Siang <span class="tap">☐</span>
-</div>
-
-<div class="card">
-<span class="time">15.15</span> Olahraga Sore <span class="tap">☐</span>
-</div>
-
-<div class="card">
-<span class="time">--</span> Tidak PMO <span class="tap">☐</span>
-</div>
-
+<div class="battery-wrap">
 <div class="battery">
 <div class="battery-fill" id="batteryFill"></div>
 </div>
-
 <div class="battery-text" id="percentText">0%</div>
+</div>
 
 </div>
 
-
-
-</div>
-
-<!-- HISTORY -->
-<div id="history" class="section">
+<!-- RECAP -->
+<div id="rec" class="section">
 <div class="recap">
-<h2>HISTORY</h2>
-<div id="historyBox"></div>
+<div id="todayDate"></div>
+<h2 id="todayPercent"></h2>
+<div id="doneList"></div>
 </div>
 </div>
 
-<!-- DATA -->
-<div id="data" class="section">
-<div class="recap">
-<h2>DATA</h2>
-
-<div id="totalDays"></div>
-<div id="avgPercent"></div>
-
-<br>
-
-<div id="c1"></div>
-<div id="c2"></div>
-<div id="c3"></div>
-<div id="c4"></div>
-<div id="c5"></div>
-
-</div>
 </div>
 
+<!-- MUSIC BUTTON (HIDDEN BEFORE LOGIN) -->
 <button id="musicBtn" onclick="cycleMusic()">🎵</button>
-<audio id="bgMusic"></audio>
 
-</div>
+<audio id="bgMusic"></audio>
 
 <script>
 
-/* 🔥 FULL RESET TOTAL STORAGE */
-localStorage.removeItem("habit");
-
-/* DATA BARU KOSONG */
-let data = {};
-
-/* KEY */
-function getKey(d){
-return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-}
+let todayKey = new Date().toDateString();
+let data = JSON.parse(localStorage.getItem("habit") || "{}");
 
 /* LOGIN */
 function login(){
 if(document.getElementById("pw").value==="1269"){
 document.getElementById("login").style.display="none";
 document.getElementById("app").style.display="block";
+
+document.getElementById("musicBtn").style.display="block"; // 🔥 FIX
+
 calendar();
 init();
 load();
@@ -312,254 +321,154 @@ load();
 }
 
 /* NAV */
-function tab(id,el){
+function tab(id){
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
-document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-el.classList.add("active");
+
+document.querySelectorAll("nav button").forEach(b=>{
+b.classList.remove("active");
+});
+event.target.classList.add("active");
 }
 
-/* INIT CHECKLIST */
+/* CHECKLIST */
 function init(){
-
 document.querySelectorAll(".tap").forEach((t,i)=>{
-
 t.onclick=()=>{
-
 if(t.classList.contains("done")) return;
-
-let card = t.parentElement;
-let text = card.firstChild.textContent.trim();
-
-// ambil jam dari text (07.15)
-let hour = text.split(" ")[0];
-
 t.classList.add("done");
 t.innerText="☑";
-
-save(i, hour);
+save(i);
 }
-
 });
-
 }
 
 /* SAVE */
-function save(i, hour){
-
-let key = getKey(new Date());
-
-if(!data[key]) data[key]=Array(5).fill(null);
-
-data[key][i] = {
-status:true,
-time:hour
-};
-
+function save(index){
+if(!data[todayKey]) data[todayKey]=Array(5).fill(false);
+data[todayKey][index]=true;
 localStorage.setItem("habit",JSON.stringify(data));
-
 load();
 }
 
 /* LOAD */
 function load(){
-
-let key = getKey(new Date());
-
-let today = data[key] || Array(5).fill(false);
+let today = data[todayKey] || Array(5).fill(false);
 
 document.querySelectorAll(".tap").forEach((t,i)=>{
 if(today[i]){
 t.classList.add("done");
 t.innerText="☑";
-}else{
-t.classList.remove("done");
-t.innerText="☐";
 }
 });
 
 let done = today.filter(v=>v).length;
 let percent = Math.round((done/5)*100);
 
-document.getElementById("batteryFill").style.width = percent+"%";
-document.getElementById("percentText").innerText = percent+"%";
+document.getElementById("batteryFill").style.width = percent + "%";
+document.getElementById("percentText").innerText = percent + "%";
 
-renderHistory();
-renderData();
+document.getElementById("todayDate").innerText =
+"📅 " + new Date().toLocaleDateString();
+
+document.getElementById("todayPercent").innerText = percent + "%";
+
+let list = [
+"Olahraga Pagi",
+"Minum Asupan",
+"Makan Siang",
+"Olahraga Sore",
+"Tidak PMO"
+];
+
+document.getElementById("doneList").innerHTML =
+list.map((l,i)=>
+`<div>${l} : ${today[i] ? "☑" : "☐"}</div>`
+).join("");
 }
 
-/* HISTORY CLEAN (2 HARI SAJA) */
-function renderHistory(){
-
-let box = document.getElementById("historyBox");
-let d = new Date();
-
-let key = getKey(d);
-let val = data[key] || Array(5).fill(false);
-
-let done = val.filter(v=>v).length;
-let percent = Math.round((done/5)*100);
-
-let format =
-String(d.getDate()).padStart(2,'0')+"/"+
-String(d.getMonth()+1).padStart(2,'0')+"/"+
-String(d.getFullYear()).slice(-2);
-
-box.innerHTML = `
-<div class="card">
-<div>${format}</div>
-<div>${percent}%</div>
-</div>
-`;
-}
-
-
-/* DATA CLEAN */
-function renderData(){
-
-let total=0,sum=0;
-
-let c1=0,c2=0,c3=0,c4=0,c5=0;
-
-for(let key in data){
-
-let d=data[key];
-if(!Array.isArray(d)) continue;
-
-let done=d.filter(v=>v).length;
-let percent=Math.round((done/5)*100);
-
-total++;
-sum+=percent;
-
-if(d[0]) c1++;
-if(d[1]) c2++;
-if(d[2]) c3++;
-if(d[3]) c4++;
-if(d[4]) c5++;
-}
-
-let avg = total ? Math.round(sum/total) : 0;
-
-document.getElementById("totalDays").innerHTML="Total Hari: "+total;
-document.getElementById("avgPercent").innerHTML="Rata-rata: "+avg+"%";
-
-document.getElementById("c1").innerHTML="Olahraga Pagi: "+(total?Math.round((c1/total)*100):0)+"%";
-document.getElementById("c2").innerHTML="Minum Asupan: "+(total?Math.round((c2/total)*100):0)+"%";
-document.getElementById("c3").innerHTML="Makan Siang: "+(total?Math.round((c3/total)*100):0)+"%";
-document.getElementById("c4").innerHTML="Olahraga Sore: "+(total?Math.round((c4/total)*100):0)+"%";
-document.getElementById("c5").innerHTML="Tidak PMO: "+(total?Math.round((c5/total)*100):0)+"%";
-}
-
-/* CALENDAR SIMPLE */
+/* CALENDAR */
 function calendar(){
-
 let el=document.getElementById("calendar");
 let now=new Date();
-
-let months=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-
 let html="";
 
-for(let m=0;m<12;m++){
+for(let m=4;m<=11;m++){
 
 let days=new Date(2026,m+1,0).getDate();
 let first=new Date(2026,m,1).getDay();
 if(first===0) first=7;
 
-html+=`<div class="month-title">📅 ${months[m]} 2026</div>`;
+let namaBulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 
-html += `
-<div class="weekdays">
+html += `<div class="month-title month-${m}">
+  <span class="bulan">${namaBulan[m]}</span>
+  <span class="tahun">2026</span>
+</div>`;
+
+html+=`<div class="weekdays">
 <div>Sen</div><div>Sel</div><div>Rab</div>
 <div>Kam</div><div>Jum</div><div>Sab</div><div>Min</div>
-</div>
-`;
+</div>`;
 
 html+=`<div class="calendar">`;
 
 for(let i=1;i<first;i++) html+=`<div></div>`;
 
-for(let d=1;d<=days;d++){
+for(let d=1; d<=days; d++){
+let isToday =
+(d===now.getDate() &&
+m===now.getMonth() &&
+now.getFullYear()===2026);
 
-let isToday = (d===now.getDate() && m===now.getMonth());
-
-html+=`<div class="day ${isToday?'today':''}">${d}</div>`;
+html+=`<div class="day ${isToday?"today":""}">${d}</div>`;
 }
 
 html+=`</div>`;
 }
-
 el.innerHTML=html;
 }
 
-let musicList=["music1.mp3","music2.mp3","music3.mp3","music4.mp3","music5.mp3"];
-let musicIndex=0;
-let playing=false;
+/* MUSIC CYCLE */
+let musicIndex = 0;
+let musicPlaying = false;
+
+let musicList = [
+"music1.mp3",
+"music2.mp3",
+"music3.mp3",
+"music4.mp3",
+"music5.mp3"
+];
 
 function cycleMusic(){
-let m=document.getElementById("bgMusic");
-let b=document.getElementById("musicBtn");
 
-if(!playing){
-m.src=musicList[musicIndex];
-m.play();
-playing=true;
-b.innerText="🎶1";
+let music = document.getElementById("bgMusic");
+let btn = document.getElementById("musicBtn");
+
+if(!musicPlaying){
+musicIndex = 0;
+music.src = musicList[musicIndex];
+music.play();
+musicPlaying = true;
+btn.innerText = "🎶1";
 return;
 }
 
 musicIndex++;
 
-if(musicIndex<musicList.length){
-m.src=musicList[musicIndex];
-m.play();
-b.innerText="🎶"+(musicIndex+1);
+if(musicIndex < musicList.length){
+music.src = musicList[musicIndex];
+music.play();
+btn.innerText = "🎶" + (musicIndex + 1);
 }else{
-m.pause();
-musicIndex=0;
-playing=false;
-b.innerText="🎵";
+music.pause();
+music.currentTime = 0;
+musicPlaying = false;
+musicIndex = 0;
+btn.innerText = "🎵";
 }
 }
-
-function login(){
-if(document.getElementById("pw").value==="1269"){
-document.getElementById("login").style.display="none";
-document.getElementById("app").style.display="block";
-document.getElementById("musicBtn").style.display="block";
-
-calendar();
-init();
-load();
-}
-}
-
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-<script>
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDT6u_yqK0KyopLCy6bIDOCIuXWlv3oz9w",
-  authDomain: "habit-a905b.firebaseapp.com",
-  databaseURL: "https://habit-a905b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "habit-a905b",
-  storageBucket: "habit-a905b.firebasestorage.app",
-  messagingSenderId: "285175863879",
-  appId: "1:285175863879:web:c1f62f0e4d87379a4f2f62"
-});
-
-const db = firebase.database();
-
-db.ref("test").set({
-  status: "Habit Ignite Connected",
-  waktu: new Date().toString()
-});
-
-console.log("Firebase Connected");
 
 </script>
 
