@@ -175,6 +175,10 @@ display:block;
 cursor:pointer;
 }
 
+#musicBtn{
+display:none;
+}
+
 .weekdays{
 display:grid;
 grid-template-columns:repeat(7,1fr);
@@ -242,7 +246,12 @@ margin:5px 0;
 <div class="battery">
 <div class="battery-fill" id="batteryFill"></div>
 </div>
+
 <div class="battery-text" id="percentText">0%</div>
+
+</div>
+
+
 
 </div>
 
@@ -513,6 +522,44 @@ playing=false;
 b.innerText="🎵";
 }
 }
+
+function login(){
+if(document.getElementById("pw").value==="1269"){
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+document.getElementById("musicBtn").style.display="block";
+
+calendar();
+init();
+load();
+}
+}
+
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+
+firebase.initializeApp({
+  apiKey: "AIzaSyDT6u_yqK0KyopLCy6bIDOCIuXWlv3oz9w",
+  authDomain: "habit-a905b.firebaseapp.com",
+  databaseURL: "https://habit-a905b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "habit-a905b",
+  storageBucket: "habit-a905b.firebasestorage.app",
+  messagingSenderId: "285175863879",
+  appId: "1:285175863879:web:c1f62f0e4d87379a4f2f62"
+});
+
+const db = firebase.database();
+
+db.ref("test").set({
+  status: "Habit Ignite Connected",
+  waktu: new Date().toString()
+});
+
+console.log("Firebase Connected");
 
 </script>
 
