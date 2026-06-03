@@ -140,6 +140,13 @@ border-radius:12px;
 text-align:center;
 }
 
+.history{
+background:rgba(255,255,255,0.06);
+padding:10px;
+margin:8px 0;
+border-radius:10px;
+}
+
 /* CALENDAR */
 .month-title{
 margin-top:18px;
@@ -259,7 +266,8 @@ display:none;
 <nav>
 <button onclick="tab('cal')" class="active">Kalender</button>
 <button onclick="tab('check')">Checklist</button>
-<button onclick="tab('rec')">Recap</button>
+<button onclick="tab('rec')">Hari Ini</button>
+<button onclick="tab('his')">History</button>
 </nav>
 
 <!-- KALENDER -->
@@ -292,6 +300,11 @@ display:none;
 <h2 id="todayPercent"></h2>
 <div id="doneList"></div>
 </div>
+</div>
+
+<!-- HISTORY -->
+<div id="his" class="section">
+<div id="historyBox"></div>
 </div>
 
 </div>
@@ -385,6 +398,91 @@ document.getElementById("doneList").innerHTML =
 list.map((l,i)=>
 `<div>${l} : ${today[i] ? "☑" : "☐"}</div>`
 ).join("");
+
+renderHistory();
+}
+
+function renderHistory(){
+
+let box = document.getElementById("historyBox");
+
+if(!box) return;
+
+box.innerHTML="";
+
+let keys = Object.keys(data).reverse();
+
+let bulanSekarang = "";
+
+keys.forEach(key=>{
+
+let today = data[key];
+
+let done = today.filter(v=>v).length;
+
+let percent = Math.round((done/5)*100);
+
+let list = [
+"Olahraga Pagi",
+"Minum Asupan",
+"Makan Siang",
+"Olahraga Sore",
+"Tidak PMO"
+];
+
+let selesai = list
+.filter((item,i)=>today[i])
+.map(item=>"☑ " + item)
+.join("<br>");
+
+if(!selesai) selesai = "Belum ada checklist";
+
+let tanggal = new Date(key);
+
+let namaBulan = tanggal.toLocaleDateString("id-ID",{
+month:"long",
+year:"numeric"
+}).toUpperCase();
+
+let indo = tanggal.toLocaleDateString("id-ID",{
+weekday:"long",
+day:"2-digit",
+month:"short",
+year:"numeric"
+}).replace(",","");
+
+if(namaBulan !== bulanSekarang){
+
+bulanSekarang = namaBulan;
+
+box.innerHTML += `
+<div style="
+background:rgba(34,197,94,0.15);
+border:1px solid rgba(34,197,94,0.3);
+padding:12px;
+border-radius:12px;
+margin-top:15px;
+margin-bottom:8px;
+font-weight:bold;
+color:#22c55e;
+text-align:center;
+font-size:18px;
+">
+📅 ${namaBulan}
+</div>
+`;
+}
+
+box.innerHTML += `
+<div class="history">
+<b>📅 ${indo} — ${percent}%</b>
+<br><br>
+${selesai}
+</div>
+`;
+
+});
+
 }
 
 /* CALENDAR */
